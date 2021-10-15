@@ -1,0 +1,35 @@
+{
+  "name": "covid-horse-race",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format-quick": "yarn pretty-quick --staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format-quick"
+    }
+  },
+  "dependencies": {
+    "next": "11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.1",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.19",
+    "@types/styled-components": "^5.1.14",
+    "@types/styled-system": "^5.1.13",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2",
+    "husky": "^7.0.2",
+    "prettier": "^2.4.1",
+    "pretty-quick": "^3.1.1",
+    "typescript": "4.4.2"
+  }
+}
