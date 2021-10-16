@@ -2,6 +2,7 @@ import {
     BorderProps,
     ColorProps,
     FlexboxProps,
+    GridProps,
     LayoutProps,
     PositionProps,
     SpaceProps,
@@ -11,6 +12,7 @@ import {
     color,
     compose,
     flexbox,
+    grid,
     layout,
     position,
     space,
@@ -18,12 +20,23 @@ import {
     typography
 } from 'styled-system';
 
-export default compose(border, color, flexbox, layout, position, space, textStyle, typography);
+export default compose(
+    border,
+    color,
+    flexbox,
+    grid,
+    layout,
+    position,
+    space,
+    textStyle,
+    typography
+);
 
 export interface StyledProps
     extends BorderProps,
         ColorProps,
         FlexboxProps,
+        GridProps,
         LayoutProps,
         PositionProps,
         SpaceProps,

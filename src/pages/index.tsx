@@ -1,58 +1,81 @@
 import Head from 'next/head';
-import {getAllPosts} from 'api';
-import {Table, Th, Td, Tr} from 'components/Table';
-import Link from 'components/Link';
 import Text from 'components/Text';
-import {Wrapper, Box} from 'components/Layout';
+import {Wrapper, Box, Grid, Relative, Absolute} from 'components/Layout';
+import {getData} from './api/horses';
 
 export default function Home(props: any) {
+    console.log(props.horses);
     return (
         <Box>
             <Head>
-                <title>Board Game One Pagers</title>
+                <title>Covid Horse Race</title>
             </Head>
 
-            <Wrapper px={[3, 3, 2]} py={5} pt={4}>
-                <Text as="h1" mt={5} mb={3} textStyle="heading1">
-                    Game List
-                </Text>
-                <Table width="100%">
-                    <thead>
-                        <tr>
-                            <Th pl={2}>Game</Th>
-                            <Th>Type</Th>
-                            <Th>Time</Th>
-                            <Th>Players</Th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.allPosts.map((post: any, index: number) => {
-                            const {slug, title, players, time, type = []} = post;
-
-                            return (
-                                <Tr
-                                    key={slug}
-                                    backgroundColor={index % 2 === 0 ? 'bg1' : undefined}
-                                >
-                                    <Td py={2} pl={2}>
-                                        <Link href={`/game/${slug}`}>{title}</Link>
-                                    </Td>
-                                    <Td>{type.join(', ')}</Td>
-                                    <Td>{time}</Td>
-                                    <Td>{players}</Td>
-                                </Tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
+            <Wrapper px={4} py={5} pt={4}>
+                {Object.entries(props.horses).map(([target, items]) => {
+                    return (
+                        <Box key={target} my={4}>
+                            <Text textStyle="heading1">{target}</Text>
+                            <Race data={items} />
+                        </Box>
+                    );
+                })}
             </Wrapper>
         </Box>
     );
 }
 
+function Race({data}) {
+    const max = 51;
+    console.log(100);
+    //<Grid my={4} gridTemplateColumns={{md: 'repeat(3, 1fr)'}} gridGap={3}>
+    const columns = `repeat(${max}, 1fr)`;
+
+    return (
+        <Grid gridTemplateColumns={columns} gridGap={1} gridAutoRows="1rem">
+            {[...Array(max)].map((_, index) => {
+                const days = max - index - 1;
+                const borderColor = days === 0 ? 'green' : days % 10 === 0 ? '#000' : '#ccc';
+                return (
+                    <Box
+                        key={index}
+                        style={{gridRowStart: 1, gridRowEnd: data.length + 2}}
+                        gridColumn={index + 1}
+                        borderLeft="1px solid"
+                        borderColor={borderColor}
+                        color={borderColor}
+                    >
+                        {days === 0 ? 'Finish!' : days}
+                    </Box>
+                );
+            })}
+            {data.map((ii, index) => {
+                const {count, name} = ii;
+                const id = ii.name.replace(/(First|Second) Doses/g, '').trim();
+                return (
+                    <Box key={ii.name} gridRow={index + 2} gridColumn={Math.max(1, max - ii.count)}>
+                        <Relative>
+                            <Absolute
+                                pl={1}
+                                textStyle="nowrap"
+                                borderLeft="4px solid"
+                                borderColor={id}
+                            >
+                                {name
+                                    .replace(/Doses/g, '')
+                                    .replace('First', '1st')
+                                    .replace('Second', '2nd')}
+                                {count >= 50 ? `(${count})` : ''}
+                            </Absolute>
+                        </Relative>
+                    </Box>
+                );
+            })}
+        </Grid>
+    );
+}
+
 export async function getStaticProps() {
-    const allPosts = await getAllPosts();
-    return {
-        props: {allPosts}
-    };
+    const horses = await getData();
+    return {props: {horses}};
 }

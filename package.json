@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "watch": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,6 +18,7 @@
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "scrape-it": "^5.3.2",
     "styled-components": "^5.3.1",
     "styled-system": "^5.1.5"
   },

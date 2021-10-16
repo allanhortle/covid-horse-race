@@ -3,7 +3,7 @@ function makeTheme(colors: any) {
         space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
         colors,
         fonts: {
-            copy: "'Inter', sans-serif"
+            copy: 'Menlo, monospace'
         },
         borders: {
             outline: '1px solid'
@@ -26,6 +26,9 @@ function makeTheme(colors: any) {
             },
             strong: {
                 fontWeight: 800
+            },
+            nowrap: {
+                whiteSpace: 'nowrap'
             }
         }
     };
@@ -43,7 +46,14 @@ export const DarkTheme = makeTheme({
     white: '#fac863',
     red: '#ec5f67',
     purple: '#c594c5',
-    lineHighlight: '#2e4e3a'
+    lineHighlight: '#2e4e3a',
+    AUS: '#1d4ed8',
+    NSW: '#FB923C',
+    VIC: '#48b685',
+    TAS: '#155bf9',
+    SA: '#e7e9db',
+    NT: '#155bf9',
+    WA: '#6D28D9'
 });
 
 export const LightTheme = makeTheme({
@@ -51,7 +61,7 @@ export const LightTheme = makeTheme({
     bg: '#fff',
     bg1: '#e3e4ea',
     comment: '#a39e9b',
-    black: '#ececec',
+    black: 'black',
     blue: '#1d4ed8',
     orange: '#FB923C',
     green: '#48b685',
@@ -60,5 +70,14 @@ export const LightTheme = makeTheme({
     red: '#155bf9',
     purple: '#6D28D9',
     muted: '#9e9e9e',
-    lineHighlight: 'rgb(188, 217, 219)'
+    lineHighlight: 'rgb(188, 217, 219)',
+    AUS: '#000',
+    NSW: '#96c8eb',
+    VIC: '#052963',
+    TAS: '#0d5c66',
+    SA: '#fbc423',
+    ACT: '#052e85',
+    NT: '#e65901',
+    WA: '#face00',
+    QLD: '#711e45'
 });
