@@ -29,7 +29,7 @@ function Race({data}: {data: Horse[]}) {
     const columns = `repeat(${max}, 1fr)`;
 
     return (
-        <Grid gridTemplateColumns={columns} gridGap={1} gridAutoRows="1rem">
+        <Grid gridTemplateColumns={columns} gridGap={1} gridAutoRows="1rem" overflow="auto">
             {[...Array(max)].map((_, index) => {
                 const days = max - index - 1;
                 const borderColor = days === 0 ? 'green' : days % 10 === 0 ? '#000' : '#ccc';
