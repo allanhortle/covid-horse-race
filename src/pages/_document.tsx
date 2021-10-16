@@ -29,10 +29,10 @@ export default class MyDocument extends Document {
         }
     }
     render() {
-        const url = 'https://boardgameonepagers.com/';
-        const img = `${url}bgop-og.png`;
-        const title = 'Board Game One Pagers';
-        const description = 'Board game rules, but just enough to remember how to play.';
+        const url = 'https://covid-horse-race.vercel.app/';
+        const img = `${url}bgop-og2.png`;
+        const title = 'Covid Horse Race!';
+        const description = "It's not a race.";
         return (
             <Html>
                 <Head>
