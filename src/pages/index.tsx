@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import Text from 'components/Text';
 import {Wrapper, Box, Grid, Relative, Absolute} from 'components/Layout';
-import {getData} from './api/horses';
+import {getData, Horse} from './api/horses';
 
-export default function Home(props: any) {
-    console.log(props.horses);
+export default function Home(props: {horses: Record<string, Horse[]>}) {
     return (
         <Box>
             <Head>
@@ -25,10 +24,8 @@ export default function Home(props: any) {
     );
 }
 
-function Race({data}) {
+function Race({data}: {data: Horse[]}) {
     const max = 51;
-    console.log(100);
-    //<Grid my={4} gridTemplateColumns={{md: 'repeat(3, 1fr)'}} gridGap={3}>
     const columns = `repeat(${max}, 1fr)`;
 
     return (

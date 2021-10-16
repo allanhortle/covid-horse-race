@@ -1,15 +1,23 @@
 import scrapeIt from 'scrape-it';
 import type {NextApiRequest, NextApiResponse} from 'next';
 
-var groupBy = function (xs, key) {
-    return xs.reduce(function (rv, x) {
+var groupBy = function (xs: any, key: string) {
+    return xs.reduce((rv: any, x: any) => {
         (rv[x[key]] = rv[x[key]] || []).push(x);
         return rv;
     }, {});
 };
 
-export async function getData() {
-    const {response, data} = await scrapeIt('https://covidlive.com.au/vaccinations', {
+export type Horse = {
+    name: string;
+    count: number;
+    done: boolean;
+    date: string;
+    target: string;
+};
+
+export async function getData(): Promise<Record<string, Horse[]>> {
+    const {response, data} = await scrapeIt<any>('https://covidlive.com.au/vaccinations', {
         doses: {
             listItem:
                 '.table-info.DAYS-UNTIL-VACCINATION-FIRST, .table-info.DAYS-UNTIL-VACCINATION-SECOND',
@@ -31,16 +39,16 @@ export async function getData() {
         }
     });
 
-    const items = data.doses
-        .flatMap((dd) => {
-            return dd.days.map((ii) => ({...ii, name: dd.name}));
+    const items: Horse[] = data.doses
+        .flatMap((dd: any) => {
+            return dd.days.map((ii: any) => ({...ii, name: dd.name}));
         })
-        .sort((a, b) => parseInt(b.target) - parseInt(a.target));
+        .sort((a: any, b: any) => parseInt(b.target) - parseInt(a.target));
 
     return groupBy(items, 'target');
 }
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function GetHorses(req: NextApiRequest, res: NextApiResponse) {
     const group = await getData();
     res.status(200).json(group);
 }
