@@ -10,4 +10,5 @@ export const Grid = styled.div<StyledProps>({display: 'grid'}, styledProps);
 
 export const Wrapper = styled(Box)`
     margin: auto;
+    max-width: 60rem;
 `;

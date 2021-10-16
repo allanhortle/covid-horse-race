@@ -12,13 +12,15 @@ export default function App({Component, pageProps}: AppProps) {
             <Box pb={5}>
                 <GlobalStyle />
                 <Box py={2} backgroundColor="black" color="bg">
-                    <Clickable href="/">
-                        <Flex>
-                            <Text ml={4} fontSize={2}>
-                                Covid Horse Race
-                            </Text>
-                        </Flex>
-                    </Clickable>
+                    <Wrapper>
+                        <Clickable href="/">
+                            <Flex>
+                                <Text ml={4} fontSize={2}>
+                                    Covid Horse Race
+                                </Text>
+                            </Flex>
+                        </Clickable>
+                    </Wrapper>
                 </Box>
                 <Component {...pageProps} />
             </Box>

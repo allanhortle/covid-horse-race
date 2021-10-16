@@ -1,9 +1,12 @@
+import {useState} from 'react';
 import Head from 'next/head';
 import Text from 'components/Text';
-import {Wrapper, Box, Grid, Relative, Absolute} from 'components/Layout';
+import Button from 'components/Button';
+import {Wrapper, Box, Flex, Grid, Relative, Absolute} from 'components/Layout';
 import {getData, Horse} from './api/horses';
 
 export default function Home(props: {horses: Record<string, Horse[]>}) {
+    const [race, setRace] = useState('90%');
     return (
         <Box>
             <Head>
@@ -11,34 +14,61 @@ export default function Home(props: {horses: Record<string, Horse[]>}) {
             </Head>
 
             <Wrapper px={4} py={5} pt={4}>
-                {Object.entries(props.horses).map(([target, items]) => {
-                    return (
-                        <Box key={target} my={4}>
-                            <Text textStyle="heading1">{target}</Text>
-                            <Race data={items} />
-                        </Box>
-                    );
-                })}
+                <Flex>
+                    <Text mr={2}>Race: </Text>
+                    {Object.keys(props.horses).map((key) => (
+                        <Button
+                            key={key}
+                            mr={2}
+                            onClick={() => setRace(key)}
+                            color={key === race ? 'blue' : 'muted'}
+                        >
+                            {key}
+                        </Button>
+                    ))}
+                </Flex>
+                <Box my={4}>
+                    <Race data={props.horses[race]} />
+                </Box>
             </Wrapper>
         </Box>
     );
 }
 
-function Race({data}: {data: Horse[]}) {
-    const max = 51;
-    const columns = `repeat(${max}, 1fr)`;
+function Race(props: {data: Horse[]}) {
+    const data = props.data;
+    const max = Math.max(...data.map((hh) => hh.count));
+    const columns = `repeat(${max + 1}, 1fr)`;
 
     return (
-        <Grid gridTemplateColumns={columns} gridGap={1} gridAutoRows="1rem" overflow="auto">
+        <Grid gridTemplateRows={columns} gridGap={1}>
+            <Box
+                gridRow={1}
+                gridColumn={1}
+                children="State"
+                position="sticky"
+                top={0}
+                backgroundColor="white"
+            />
+            <Box
+                gridRow={2}
+                gridColumn={1}
+                children="Dose"
+                position="sticky"
+                top={3}
+                backgroundColor="white"
+            />
             {[...Array(max)].map((_, index) => {
-                const days = max - index - 1;
+                const days = index;
                 const borderColor = days === 0 ? 'green' : days % 10 === 0 ? '#000' : '#ccc';
+                const y = index + 3;
+                const x = data.length + 2;
                 return (
                     <Box
                         key={index}
-                        style={{gridRowStart: 1, gridRowEnd: data.length + 2}}
-                        gridColumn={index + 1}
-                        borderLeft="1px solid"
+                        style={{gridColumnStart: 1, gridColumnEnd: x}}
+                        gridRow={y}
+                        borderTop="1px solid"
                         borderColor={borderColor}
                         color={borderColor}
                     >
@@ -49,23 +79,44 @@ function Race({data}: {data: Horse[]}) {
             {data.map((ii, index) => {
                 const {count, name} = ii;
                 const id = ii.name.replace(/(First|Second) Doses/g, '').trim();
+                const y = ii.count + 3;
+                const x = index + 2;
+                const title = name
+                    .replace(/Doses/g, '')
+                    .replace('First', '1st Dose')
+                    .replace('Second', '2nd Dose');
                 return (
-                    <Box key={ii.name} gridRow={index + 2} gridColumn={Math.max(1, max - ii.count)}>
-                        <Relative>
-                            <Absolute
-                                pl={1}
-                                textStyle="nowrap"
-                                borderLeft="4px solid"
-                                borderColor={id}
-                            >
-                                {name
-                                    .replace(/Doses/g, '')
-                                    .replace('First', '1st')
-                                    .replace('Second', '2nd')}
-                                {count >= 50 ? `(${count})` : ''}
-                            </Absolute>
-                        </Relative>
-                    </Box>
+                    <>
+                        {name.includes('First') && (
+                            <Box
+                                gridRow={1}
+                                gridColumn={x}
+                                children={id}
+                                position="sticky"
+                                top={0}
+                                backgroundColor="white"
+                            />
+                        )}
+                        <Box
+                            gridRow={2}
+                            gridColumn={x}
+                            position="sticky"
+                            top={3}
+                            backgroundColor="white"
+                        >
+                            {name.includes('First') ? '1st' : '2nd'}
+                        </Box>
+                        <Box key={ii.name} gridColumn={x} gridRow={y}>
+                            <Relative>
+                                <Box
+                                    textStyle="nowrap"
+                                    borderTop="4px solid"
+                                    borderColor={id}
+                                    children={'🐎'}
+                                />
+                            </Relative>
+                        </Box>
+                    </>
                 );
             })}
         </Grid>

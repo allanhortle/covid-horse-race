@@ -1,3 +1,9 @@
+import {DefaultTheme} from 'styled-components';
+
+export type ThemeType = DefaultTheme;
+
+export type Color = keyof DefaultTheme['colors'];
+
 function makeTheme(colors: any) {
     return {
         space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -34,28 +40,6 @@ function makeTheme(colors: any) {
     };
 }
 
-export const DarkTheme = makeTheme({
-    bg: 'black',
-    bg1: 'black',
-    fg: '#fafafa',
-    comment: '#6D6D6D',
-    black: '#0c0c0c',
-    blue: '#1d4ed8',
-    green: '#99c794',
-    yellow: '#fac863',
-    white: '#fac863',
-    red: '#ec5f67',
-    purple: '#c594c5',
-    lineHighlight: '#2e4e3a',
-    AUS: '#1d4ed8',
-    NSW: '#FB923C',
-    VIC: '#48b685',
-    TAS: '#155bf9',
-    SA: '#e7e9db',
-    NT: '#155bf9',
-    WA: '#6D28D9'
-});
-
 export const LightTheme = makeTheme({
     fg: '#4f424c',
     bg: '#fff',
@@ -66,7 +50,7 @@ export const LightTheme = makeTheme({
     orange: '#FB923C',
     green: '#48b685',
     yellow: '#155bf9',
-    white: '#e7e9db',
+    white: '#fff',
     red: '#155bf9',
     purple: '#6D28D9',
     muted: '#9e9e9e',

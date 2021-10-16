@@ -1,6 +1,7 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "eslint-react/display-name": "off"
+    "eslint-react/display-name": "off",
+    "react/no-children-prop": "off"
   }
 }

@@ -30,6 +30,7 @@ declare module 'styled-components' {
             blue: string;
             purple: string;
             comment: string;
+            muted: string;
             fg: string;
             black: string;
         };
