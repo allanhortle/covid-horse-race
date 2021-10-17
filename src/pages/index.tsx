@@ -14,14 +14,14 @@ export default function Home(props: {horses: Record<string, Horse[]>}) {
             </Head>
 
             <Wrapper p={[2, 3, 4]}>
-                <Flex>
+                <Flex alignItems="center">
                     <Text mr={2}>Race: </Text>
                     {Object.keys(props.horses).map((key) => (
                         <Button
                             key={key}
                             mr={2}
                             onClick={() => setRace(key)}
-                            color={key === race ? 'blue' : 'muted'}
+                            color={key === race ? 'black' : 'muted'}
                         >
                             {key}
                         </Button>
@@ -41,7 +41,7 @@ function Race(props: {data: Horse[]}) {
     const columns = `repeat(${max + 1}, 1fr)`;
 
     return (
-        <Grid gridTemplateRows={columns} gridGap={1}>
+        <Grid gridTemplateRows={columns} gridGap={1} fontSize="10px">
             <Box
                 gridRow={1}
                 gridColumn={1}

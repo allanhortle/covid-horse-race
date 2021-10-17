@@ -9,7 +9,7 @@ function makeTheme(colors: any) {
         space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
         colors,
         fonts: {
-            copy: 'Menlo, monospace'
+            copy: "'Sarabun', sans-serif;"
         },
         borders: {
             outline: '1px solid'

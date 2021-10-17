@@ -86,9 +86,10 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${(_) => _.theme.colors.bg};
         color: ${(_) => _.theme.colors.fg};
         font-family: ${(_) => _.theme.fonts.copy};
-        font-size: 10px;
-        line-height: 1.5;
-        font-weight: 300;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 600;
+        font-style: italic;
     }
     strong {font-weight: bold};
     em {font-style: italic};

@@ -13,13 +13,9 @@ export default function App({Component, pageProps}: AppProps) {
                 <GlobalStyle />
                 <Box py={2} backgroundColor="black" color="bg">
                     <Wrapper>
-                        <Clickable href="/">
-                            <Flex>
-                                <Text ml={4} fontSize={2}>
-                                    Covid Horse Race
-                                </Text>
-                            </Flex>
-                        </Clickable>
+                        <Text as="h1" fontSize={[2, 3, 5]} textAlign="center">
+                            Covid Horse Race
+                        </Text>
                     </Wrapper>
                 </Box>
                 <Component {...pageProps} />
