@@ -59,7 +59,7 @@ export const LightTheme = makeTheme({
     NSW: '#96c8eb',
     VIC: '#052963',
     TAS: '#0d5c66',
-    SA: '#fbc423',
+    SA: '#d50032',
     ACT: '#052e85',
     NT: '#e65901',
     WA: '#face00',
