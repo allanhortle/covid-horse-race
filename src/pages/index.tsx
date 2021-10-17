@@ -13,7 +13,7 @@ export default function Home(props: {horses: Record<string, Horse[]>}) {
                 <title>Covid Horse Race</title>
             </Head>
 
-            <Wrapper px={4} py={5} pt={4}>
+            <Wrapper p={[2, 3, 4]}>
                 <Flex>
                     <Text mr={2}>Race: </Text>
                     {Object.keys(props.horses).map((key) => (
@@ -58,7 +58,7 @@ function Race(props: {data: Horse[]}) {
                 top={3}
                 backgroundColor="white"
             />
-            {[...Array(max)].map((_, index) => {
+            {[...Array(max + 1)].map((_, index) => {
                 const days = index;
                 const borderColor = days === 0 ? 'green' : days % 10 === 0 ? '#000' : '#ccc';
                 const y = index + 3;
@@ -90,7 +90,8 @@ function Race(props: {data: Horse[]}) {
                         {name.includes('First') && (
                             <Box
                                 gridRow={1}
-                                gridColumn={x}
+                                textAlign="center"
+                                gridColumn={`${x} / ${x + 2}`}
                                 children={id}
                                 position="sticky"
                                 top={0}
@@ -101,20 +102,19 @@ function Race(props: {data: Horse[]}) {
                             gridRow={2}
                             gridColumn={x}
                             position="sticky"
+                            textAlign="center"
                             top={3}
                             backgroundColor="white"
                         >
-                            {name.includes('First') ? '1st' : '2nd'}
+                            {name.includes('First') ? '1' : '2'}
                         </Box>
-                        <Box key={ii.name} gridColumn={x} gridRow={y}>
-                            <Relative>
-                                <Box
-                                    textStyle="nowrap"
-                                    borderTop="4px solid"
-                                    borderColor={id}
-                                    children={'🐎'}
-                                />
-                            </Relative>
+                        <Box
+                            key={ii.name}
+                            gridColumn={x}
+                            gridRow={`${y} / ${max + 4}`}
+                            backgroundColor={id}
+                        >
+                            <Box textAlign="center" fontSize={['6px', 1, 2]} children={'🐎'} />
                         </Box>
                     </>
                 );
