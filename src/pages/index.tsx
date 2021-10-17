@@ -28,17 +28,19 @@ export default function Home(props: {horses: Record<string, Horse[]>}) {
                     ))}
                 </Flex>
                 <Box my={4}>
-                    <Race data={props.horses[race]} />
+                    <Race data={props.horses[race]} race={race} />
                 </Box>
             </Wrapper>
         </Box>
     );
 }
 
-function Race(props: {data: Horse[]}) {
-    const data = props.data;
-    const max = Math.max(...data.map((hh) => hh.count));
+function Race(props: {data: Horse[]; race: string}) {
+    const {data, race} = props;
+    const max = Math.max(...data.map((hh) => hh.count), 30);
     const columns = `repeat(${max + 1}, 1fr)`;
+
+    const isSingle = data.length === 9;
 
     return (
         <Grid gridTemplateRows={columns} gridGap={1} fontSize="10px">
@@ -79,25 +81,22 @@ function Race(props: {data: Horse[]}) {
             {data.map((ii, index) => {
                 const {count, name} = ii;
                 const id = ii.name.replace(/(First|Second) Doses/g, '').trim();
-                const y = ii.count + 3;
+                const y = count + 3;
                 const x = index + 2;
-                const title = name
-                    .replace(/Doses/g, '')
-                    .replace('First', '1st Dose')
-                    .replace('Second', '2nd Dose');
                 return (
                     <>
                         {name.includes('First') && (
                             <Box
                                 gridRow={1}
                                 textAlign="center"
-                                gridColumn={`${x} / ${x + 2}`}
+                                gridColumn={`${x} / ${x + (isSingle ? 1 : 2)}`}
                                 children={id}
                                 position="sticky"
                                 top={0}
                                 backgroundColor="white"
                             />
                         )}
+
                         <Box
                             gridRow={2}
                             gridColumn={x}
@@ -109,7 +108,7 @@ function Race(props: {data: Horse[]}) {
                             {name.includes('First') ? '1' : '2'}
                         </Box>
                         <Box
-                            key={ii.name}
+                            key={name}
                             gridColumn={x}
                             gridRow={`${y} / ${max + 4}`}
                             backgroundColor={id}

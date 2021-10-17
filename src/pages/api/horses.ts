@@ -39,13 +39,25 @@ export async function getData(): Promise<Record<string, Horse[]>> {
         }
     });
 
-    const items: Horse[] = data.doses
+    let items: Horse[] = data.doses
         .flatMap((dd: any) => {
             return dd.days.map((ii: any) => ({...ii, name: dd.name}));
         })
         .sort((a: any, b: any) => parseInt(b.target) - parseInt(a.target));
 
-    return groupBy(items, 'target');
+    const groups = groupBy(items, 'target');
+
+    for (const key in groups) {
+        if (groups[key].length === 9) {
+            groups[key] = groups[key].flatMap((ii: Horse) => {
+                return key === '60%'
+                    ? [{...ii, count: 0, name: ii.name.replace('Second', 'First')}, ii]
+                    : [ii];
+            });
+        }
+    }
+
+    return groups;
 }
 
 export default async function GetHorses(req: NextApiRequest, res: NextApiResponse) {
