@@ -32,7 +32,11 @@ export async function getData(): Promise<Record<string, Horse[]>> {
                             convert: Boolean
                         },
                         date: '.tooltip',
-                        target: '.SECOND, .FIRST'
+                        is12: {
+                            selector: '.SECOND-12, .FIRST-12',
+                            convert: Boolean
+                        },
+                        target: '.SECOND, .FIRST, .SECOND-12, .FIRST-12'
                     }
                 }
             }
@@ -41,7 +45,11 @@ export async function getData(): Promise<Record<string, Horse[]>> {
 
     let items: Horse[] = data.doses
         .flatMap((dd: any) => {
-            return dd.days.map((ii: any) => ({...ii, name: dd.name}));
+            return dd.days.map((ii: any) => ({
+                ...ii,
+                target: ii.is12 ? `${ii.target} 12+` : ii.target,
+                name: dd.name
+            }));
         })
         .sort((a: any, b: any) => parseInt(b.target) - parseInt(a.target));
 
