@@ -62,7 +62,7 @@ function Race(props: {data: Horse[]; race: string}) {
             />
             {[...Array(max + 1)].map((_, index) => {
                 const days = index;
-                const borderColor = days === 0 ? 'green' : days % 10 === 0 ? '#000' : '#ccc';
+                const borderColor = days === 0 ? 'green' : days % 7 === 0 ? '#000' : '#ccc';
                 const y = index + 3;
                 const x = data.length + 2;
                 return (
